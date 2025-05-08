@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Laxmi Farmhouse Booking</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+    font-family: 'Poppins', sans-serif;
+    color: #222;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 14px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  header h1 {
+    font-weight: 700;
+    font-size: 1.9rem;
+    color: #0b3a7e;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    margin-bottom: 4px;
+  }
+  header h2 {
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: #084a99;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  main {
+    background: rgba(255, 255, 255, 0.95);
+    width: 100%;
+    max-width: 380px;
+    border-radius: 18px;
+    box-shadow: 0 18px 38px rgba(0,0,0,0.22);
+    padding: 20px 25px 30px 25px;
+    overflow-y: auto;
+    max-height: 600px;
+  }
+  #photos {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    margin-bottom: 22px;
+    border-radius: 14px;
+  }
+  #photos img {
+    height: 130px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  #photos img:hover {
+    transform: scale(1.07);
+  }
+  form label {
+    display: block;
+    margin: 11px 0 5px 0;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: #155799;
+  }
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="tel"],
+  form input[type="number"],
+  form input[type="date"] {
+    width: 100%;
+    padding: 9px 14px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 2px solid #3e92cc;
+    transition: border-color 0.3s ease;
+  }
+  form input:focus {
+    border-color: #1a54a8;
+    outline: none;
+    box-shadow: 0 0 8px rgba(26, 84, 168, 0.5);
+  }
+  #advance-payment-section {
+    margin-top: 18px;
+    text-align: center;
+    padding-top: 8px;
+    border-top: 1.5px solid #aaccee;
+  }
+  #payment-number {
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin: 10px 0 14px 0;
+    color: #0b3a7e;
+    user-select: all;
+  }
+  #qr-code {
+    margin: 0 auto;
+    width: 140px;
+    height: 140px;
+  }
+  #booked-dates {
+    margin-top: 24px;
+    font-size: 0.87rem;
+    color: #234a78;
+    max-height: 90px;
+    overflow-y: auto;
+    border-top: 1.8px solid #aaccee;
+    padding-top: 12px;
+  }
+  #booked-dates strong {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: #155799;
+  }
+  #booked-dates-list {
+    padding-left: 20px;
+    margin-top: 4px;
+  }
+  #booked-dates-list li {
+    margin-bottom: 4px;
+  }
+  button {
+    margin-top: 18px;
+    background: #0b3a7e;
+    color: white;
+    font-weight: 700;
+    border: none;
+    padding: 14px;
+    width: 100%;
+    font-size: 1.15rem;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(11, 58, 126, 0.8);
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #14478c;
+  }
+  #messages {
+    margin-top: 16px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #cc0000;
+    min-height: 26px;
+    user-select: none;
+  }
+  #existing-bookings {
+    margin-top: 28px;
+    max-height: 120px;
+    overflow-y: auto;
+    font-size: 0.88rem;
+    color: #1b3d6e;
+  }
+  #existing-bookings h3 {
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .booking-item {
+    border: 2px solid #3a7bd5;
+    border-radius: 12px;
+    padding: 8px 14px;
+    margin-bottom: 8px;
+    background: #d9e7fd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .booking-info {
+    flex-grow: 1;
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: #102c54;
+  }
+  .edit-btn {
+    background: #14478c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.25s ease;
+  }
+  .edit-btn:hover {
+    background: #0b3a7e;
+  }
+  /* Responsive & mobile friendly */
+  @media (max-width: 400px) {
+    main {
+      padding: 18px 18px 30px 18px;
+    }
+    #photos img {
+      height: 110px;
+    }
+    #qr-code {
+      width: 120px;
+      height: 120px;
+    }
+    button {
+      font-size: 1.05rem;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Laxmi Farmhouse</h1>
+  <h2>Online Booking Form</h2>
+</header>
+<main>
+  <section id="photos" aria-label="Laxmi Farmhouse Photos">
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Farmhouse front view" />
+    <img src="https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=400&q=80" alt="Farmhouse garden" />
+    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=400&q=80" alt="Farmhouse interior" />
+    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=400&q=80" alt="Farmhouse outdoor seating" />
+  </section>
+
+  <form id="booking-form" autocomplete="off" novalidate>
+    <label for="name">Full Name*</label>
+    <input type="text" id="name" name="name" placeholder="Your full name" required minlength="3" />
+
+    <label for="phone">Phone Number*</label>
+    <input type="tel" id="phone" name="phone" placeholder="e.g. +91-9876543210" pattern="\\+?\\d{7,15}" required />
+
+    <label for="email">Email Address*</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+    <label for="num-guests">Number of Guests*</label>
+    <input type="number" id="num-guests" name="numGuests" min="1" max="50" value="1" required />
+
+    <label for="checkin-date">Booking Date (Check-in)*</label>
+    <input type="date" id="checkin-date" name="checkinDate" required />
+
+    <label for="checkout-date">Check-out Date*</label>
+    <input type="date" id="checkout-date" name="checkoutDate" required />
+
+    <div id="advance-payment-section">
+      <label>Advance Payment (₹3000)</label>
+      <div id="payment-number" title="Tap to copy UPI ID">farmhouse@upi</div>
+      <canvas id="qr-code" aria-label="QR code for advance payment"></canvas>
+    </div>
+
+    <button type="submit">Book Now</button>
+  </form>
+
+  <div id="messages" role="alert" aria-live="polite"></div>
+
+  <section id="booked-dates" aria-label="Already Booked Dates">
+    <strong>Already Booked Dates:</strong>
+    <ul id="booked-dates-list"></ul>
+  </section>
+
+  <section id="existing-bookings" aria-label="Your Existing Bookings">
+    <h3>Your Bookings (Search by Phone or Email)</h3>
+    <div id="user-bookings-list" tabindex="0"></div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+<script>
+  const STORAGE_KEY = 'laxmiFarmhouseBookings';
+  const ADVANCE_PAYMENT_AMOUNT = 3000;
+  const PAYMENT_UPI_ID = 'farmhouse@upi';
+
+  const form = document.getElementById('booking-form');
+  const messages = document.getElementById('messages');
+  const bookedDatesList = document.getElementById('booked-dates-list');
+  const checkinDateInput = document.getElementById('checkin-date');
+  const checkoutDateInput = document.getElementById('checkout-date');
+  const userBookingsList = document.getElementById('user-bookings-list');
+  const paymentNumberDiv = document.getElementById('payment-number');
+  const qrCanvas = document.getElementById('qr-code');
+
+  // Draw QR code for advance payment UPI
+  function drawQRCode() {
+    QRCode.toCanvas(qrCanvas, `upi://pay?pa=${PAYMENT_UPI_ID}&pn=Laxmi Farmhouse&am=${ADVANCE_PAYMENT_AMOUNT}`, {width: 140}, function (error) {
+      if (error) {
+        qrCanvas.style.display = 'none';
+        paymentNumberDiv.textContent = 'QR Not Available';
+      }
+    });
+  }
+
+  drawQRCode();
+
+  // Copy UPI ID when clicking payment number text
+  paymentNumberDiv.addEventListener('click', () => {
+    navigator.clipboard.writeText(PAYMENT_UPI_ID).then(() => {
+      messages.style.color = 'green';
+      messages.textContent = 'UPI ID copied to clipboard!';
+      setTimeout(() => { messages.textContent = ''; messages.style.color = '#cc0000'; }, 2500);
+    });
+  });
+
+  // Loading/saving bookings
+  function loadBookings() {
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (!data) return [];
+    try {
+      return JSON.parse(data);
+    } catch {
+      return [];
+    }
+  }
+
+  function saveBookings(bookings) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+  }
+
+  // Format date YYYY-MM-DD to readable
+  function formatDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString(undefined, {day:'2-digit', month:'short', year:'numeric'});
+  }
+
+  // Check overlap of two date ranges
+  function isOverlapping(s1, e1, s2, e2) {
+    return (new Date(s1) <= new Date(e2)) && (new Date(e1) >= new Date(s2));
+  }
+
+  // Render all booked dates
+  function renderBookedDates(bookings) {
+    bookedDatesList.innerHTML = '';
+    if (bookings.length === 0) {
+      bookedDatesList.innerHTML = '<li>No bookings yet.</li>';
+      return;
+    }
+    bookings.forEach(b => {
+      const li = document.createElement('li');
+      li.textContent = `${formatDate(b.checkinDate)} to ${formatDate(b.checkoutDate)} — ${b.name} (${b.numGuests} guest${b.numGuests>1?'s':''})`;
+      bookedDatesList.appendChild(li);
+    });
+  }
+
+  // Set date input min/max and validation
+  function setupDateInputs() {
+    const todayStr = new Date().toISOString().split('T')[0];
+    checkinDateInput.min = todayStr;
+    checkoutDateInput.min = todayStr;
+
+    checkinDateInput.addEventListener('change', () => {
+      let ci = checkinDateInput.value;
+      if (ci) {
+        const nextDay = new Date(ci);
+        nextDay.setDate(nextDay.getDate() + 1);
+        checkoutDateInput.min = nextDay.toISOString().split('T')[0];
+        if (checkoutDateInput.value && checkoutDateInput.value < checkoutDateInput.min) {
+          checkoutDateInput.value = '';
+        }
+      }
+    });
+  }
+
+  // Generate booking unique ID
+  function generateId() {
+    return 'bk_' + Math.random().toString(36).substr(2, 9);
+  }
+
+  // Check if new booking overlaps existing ones except for edited one
+  function datesAreAvailable(newStart, newEnd, currentId = null) {
+    const bookings = loadBookings();
+    for (const b of bookings) {
+      if (currentId && b.id === currentId) continue;
+      if (isOverlapping(newStart, newEnd, b.checkinDate, b.checkoutDate)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Render logged-in user's bookings list with edit button
+  function renderUserBookings() {
+    userBookingsList.innerHTML = '';
+    const phoneVal = form.phone.value.trim();
+    const emailVal = form.email.value.trim().toLowerCase();
+
+    if (!phoneVal && !emailVal) {
+      userBookingsList.innerHTML = '<p>Enter Phone or Email to view/edit your bookings.</p>';
+      return;
+    }
+
+    const bookings = loadBookings();
+    const filteredBookings = bookings.filter(b => b.phone === phoneVal || b.email.toLowerCase() === emailVal);
+
+    if (filteredBookings.length === 0) {
+      userBookingsList.innerHTML = '<p>No bookings found for entered Phone or Email.</p>';
+      return;
+    }
+
+    filteredBookings.forEach(b => {
+      const div = document.createElement('div');
+      div.className = 'booking-item';
+
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'booking-info';
+      infoDiv.textContent = `${formatDate(b.checkinDate)} to ${formatDate(b.checkoutDate)} — ${b.name} (${b.numGuests} guest${b.numGuests>1?'s':''})`;
+
+      const editBtn = document.createElement('button');
+      editBtn.className = 'edit-btn';
+      editBtn.textContent = 'Edit';
+      editBtn.addEventListener('click', () => {
+        // Prefill form for editing
+        form.name.value = b.name;
+        form.phone.value = b.phone;
+        form.email.value = b.email;
+        form['numGuests'].value = b.numGuests;
+        form.checkinDate.value = b.checkinDate;
+        form.checkoutDate.value = b.checkoutDate;
+        editBookingId = b.id;
+        messages.style.color = '#155799';
+        messages.textContent = 'Editing booking - Update details and submit.';
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      });
+
+      div.appendChild(infoDiv);
+      div.appendChild(editBtn);
+      userBookingsList.appendChild(div);
+    });
+  }
+
+  // Reset form and variables
+  function resetForm() {
+    form.reset();
+    checkoutDateInput.min = new Date().toISOString().split('T')[0];
+    editBookingId = null;
+  }
+
+  // Variables
+  let editBookingId = null;
+
+  // Update user's bookings while typing phone or email
+  form.phone.addEventListener('input', renderUserBookings);
+  form.email.addEventListener('input', renderUserBookings);
+
+  // Validate form inputs and handle submission
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    messages.style.color = '#cc0000';
+    messages.textContent = '';
+
+    const name = form.name.value.trim();
+    const phone = form.phone.value.trim();
+    const email = form.email.value.trim().toLowerCase();
+    const numGuests = parseInt(form['numGuests'].value, 10);
+    const checkinDate = form.checkinDate.value;
+    const checkoutDate = form.checkoutDate.value;
+
+    // Basic validation
+    if (name.length < 3) {
+      messages.textContent = 'Please enter a valid full name (min 3 characters).';
+      return;
+    }
+    if (!phone.match(/^\\+?\\d{7,15}$/)) {
+      messages.textContent = 'Please enter a valid phone number with 7 to 15 digits.';
+      return;
+    }
+    if (!email.includes('@') || email.length < 5) {
+      messages.textContent = 'Please enter a valid email address.';
+      return;
+    }
+    if (isNaN(numGuests) || numGuests < 1 || numGuests > 50) {
+      messages.textContent = 'Please enter number of guests between 1 and 50.';
+      return;
+    }
+    if (!checkinDate || !checkoutDate) {
+      messages.textContent = 'Please select both check-in and check-out dates.';
+      return;
+    }
+    if (checkoutDate <= checkinDate) {
+      messages.textContent = 'Check-out date must be after check-in date.';
+      return;
+    }
+    // Check date availability
+    if (!datesAreAvailable(checkinDate, checkoutDate, editBookingId)) {
+      messages.textContent = 'Selected dates are already booked. Please choose different dates.';
+      return;
+    }
+
+    const bookings = loadBookings();
+
+    // If editing, update existing booking
+    if (editBookingId) {
+      let updated = false;
+      for (let i = 0; i < bookings.length; i++) {
+        if (bookings[i].id === editBookingId) {
+          bookings[i].name = name;
+          bookings[i].phone = phone;
+          bookings[i].email = email;
+          bookings[i].numGuests = numGuests;
+          bookings[i].checkinDate = checkinDate;
+          bookings[i].checkoutDate = checkoutDate;
+          updated = true;
+          break;
+        }
+      }
+      if (!updated) {
+        messages.textContent = 'Error: Booking to update not found.';
+        return;
+      }
+    } else {
+      // New booking
+      const newBooking = {
+        id: generateId(),
+        name,
+        phone,
+        email,
+        numGuests,
+        checkinDate,
+        checkoutDate
+      };
+      bookings.push(newBooking);
+    }
+
+    saveBookings(bookings);
+    renderBookedDates(bookings);
+    renderUserBookings();
+    resetForm();
+    messages.style.color = 'green';
+    messages.textContent = 'Booking saved successfully! Advance payment of ₹3000 is pending.';
+  });
+
+  // Initial setup on load
+  window.addEventListener('load', () => {
+    setupDateInputs();
+    const bookings = loadBookings();
+    renderBookedDates(bookings);
+    renderUserBookings();
+  });
+</script>
+</body>
+</html>
+</content>
+</create_file>
