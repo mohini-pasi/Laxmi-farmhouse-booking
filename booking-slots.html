@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Laxmi Farmhouse - Reserved Booking Dates</title>
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0; height: 100%; width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff;
+    color: #244a32;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  #app {
+    max-width: 400px;
+    width: 100%;
+    height: 600px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(202, 26, 26, 0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #a8d5b9;
+    padding-bottom: 1rem;
+  }
+  button#btn-back {
+    background: #3d7a51;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-right: 1rem;
+    box-shadow: 0 3px 10px rgba(35, 92, 54, 0.7);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  button#btn-back:hover, button#btn-back:focus {
+    background: #2c5739;
+    outline: none;
+    transform: scale(1.05);
+  }
+  h1 {
+    margin: 0;
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: #092511;
+    text-shadow: 1px 1px 3px #a8d5b9;
+    user-select: none;
+    flex-grow: 1;
+  }
+  main {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-top: 1rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead {
+    background-color: #3d7a51;
+    color: white;
+  }
+  th, td {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #a8d5b9;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #e9f0e7;
+  }
+  tbody tr:hover {
+    background-color: #c8dacc;
+  }
+  main::-webkit-scrollbar {
+    width: 8px;
+  }
+  main::-webkit-scrollbar-thumb {
+    background-color: #3d7a51;
+    border-radius: 4px;
+  }
+  @media (max-width: 400px) {
+    #app {
+      width: 90vw;
+      height: 90vh;
+      max-width: none;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      padding: 0.75rem;
+    }
+    h1 {
+      font-size: 1.4rem;
+    }
+    button#btn-back {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+      margin-right: 0.5rem;
+    }
+    th, td {
+      font-size: 0.8rem;
+      padding: 0.5rem 0.6rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="app" role="main" aria-label="Laxmi Farmhouse Reserved Booking Dates">
+
+    <header>
+      <button id="btn-back" aria-label="Go back to Home">&larr; Back</button>
+      <h1>Reserved Booking Dates</h1>
+    </header>
+
+    <main>
+      <table aria-describedby="booking-desc" id="reserved-dates-table">
+        <caption id="booking-desc" style="text-align:left; font-weight:600; margin-bottom:0.5rem; color:#244a32;">
+          All reserved dates from bookings listed below
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Booking ID</th>
+            <th scope="col">Reserved Date</th>
+          </tr>
+        </thead>
+        <tbody id="reserved-dates-list">
+          <!-- Rows are dynamically inserted here -->
+        </tbody>
+      </table>
+      <p id="no-reserved-msg" style="text-align:center; font-weight:700; color:#8a8a8a; margin-top:1rem; display:none;">
+        No reserved dates found.
+      </p>
+    </main>
+  </div>
+
+<script>
+  const STORAGE_KEY = 'laxmiFarmhouseBookings';
+
+  function loadBookings() {
+    const bookings = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return bookings ? bookings : [];
+  }
+
+  function saveBookings(bookings) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+  }
+
+  function removePastBookings(bookings) {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    return bookings.filter(b => {
+      const checkoutDate = new Date(b.checkOut);
+      checkoutDate.setHours(0,0,0,0);
+      return checkoutDate >= today;
+    });
+  }
+
+  function getDatesInRange(startDateStr, endDateStr) {
+    const dateArray = [];
+    let currentDate = new Date(startDateStr);
+    const endDate = new Date(endDateStr);
+    while (currentDate <= endDate) {
+      dateArray.push(currentDate.toISOString().slice(0,10));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dateArray;
+  }
+
+  function renderReservedDates() {
+    let bookings = loadBookings();
+    bookings = removePastBookings(bookings);
+    saveBookings(bookings);
+
+    const tbody = document.getElementById('reserved-dates-list');
+    const table = document.getElementById('reserved-dates-table');
+    const noReservedMsg = document.getElementById('no-reserved-msg');
+    tbody.innerHTML = '';
+
+    if(bookings.length === 0){
+      table.style.display = 'none';
+      noReservedMsg.style.display = 'block';
+      return;
+    } else {
+      table.style.display = '';
+      noReservedMsg.style.display = 'none';
+    }
+
+    bookings.forEach(booking => {
+      const dates = getDatesInRange(booking.checkIn, booking.checkOut);
+      dates.forEach(date => {
+        const tr = document.createElement('tr');
+
+        const tdId = document.createElement('td');
+        tdId.textContent = booking.id;
+        tr.appendChild(tdId);
+
+        const tdDate = document.createElement('td');
+        tdDate.textContent = date;
+        tr.appendChild(tdDate);
+
+        tbody.appendChild(tr);
+      });
+    });
+  }
+
+  document.getElementById('btn-back').addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+
+  renderReservedDates();
+</script>
+
+</body>
+</html>
+</content>
+</create_file>

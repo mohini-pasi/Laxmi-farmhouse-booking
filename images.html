@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Laxmi Farmhouse Booking - Images</title>
+<style>
+  /* Reset & base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff; /* White background */
+    color: #244a32;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #app {
+    width: 100%;
+    max-width: 400px;
+    height: 600px;
+    background: #edf3e0;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+    color: #244a32;
+  }
+
+  header {
+    padding: 1rem;
+    user-select: none;
+    background: #36795d;
+    border-radius: 12px 12px 0 0;
+    color: #e6f2ef;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  main {
+    flex-grow: 1;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+    font-weight: 900;
+    color: #2c5739;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: 12px;
+    width: 100%;
+  }
+  .gallery img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 3px 7px rgba(36, 74, 50, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .gallery img:hover, .gallery img:focus {
+    transform: scale(1.1);
+    outline: none;
+  }
+  
+  button.back-btn {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: #27472d;
+    box-shadow: 0 3px 10px rgba(39, 71, 45, 0.7);
+    transition: background-color 0.3s ease;
+  }
+  button.back-btn:hover, button.back-btn:focus {
+    background: #1f3f24;
+    outline: none;
+  }
+
+  /* Responsive mobile optimizations */
+  @media (max-width: 400px) {
+    #app {
+      width: 90vw;
+      height: 90vh;
+      max-width: none;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+    main {
+      padding: 1rem 0.8rem;
+    }
+    button.back-btn {
+      font-size: 1.3rem;
+      padding: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="app" role="main" aria-label="Laxmi Farmhouse Image Gallery">
+
+    <header>
+      Farmhouse Images
+    </header>
+
+    <main>
+      <div class="gallery" role="list" aria-label="Farmhouse image gallery">
+        <img src="static/front.jpg" alt="Lawn with chairs and trees" tabindex="0" role="listitem" />
+        <img src="static/image2.jpg" alt="Farmhouse facade with veranda" tabindex="0" role="listitem" />
+        <img src="static/image3.jpg" alt="Garden and pathway" tabindex="0" role="listitem" />
+        <img src="static/mainpage.jpg" alt="Sunny outdoor dining setup" tabindex="0" role="listitem" />
+        <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=300&q=80" alt="Evening farmhouse view" tabindex="0" role="listitem" />
+       
+      </div>
+      <button class="back-btn" onclick="location.href='index.html'" aria-label="Back to Home">Back</button>
+    </main>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Laxmi Farmhouse</title>
+<style>
+  /* Reset & base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff; /* White background */
+    color: #244a32;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #app {
+    width: 100%;
+    max-width: 400px;
+    height: 600px;
+    background: white;
+    background-size: cover;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(202, 26, 26, 0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  header {
+    padding: 1rem;
+    user-select: none;
+  }
+  header h1 {
+    margin: 0.2rem 0;
+    font-weight: 900;
+    font-size: 1.8rem;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    color: #092511;
+    text-shadow: 1px 1px 3px #a8d5b9;
+  }
+  header p {
+    margin: 0.3rem 0 0;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #081e14;
+  }
+  header a {
+    color: #021a09;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  header a:hover, header a:focus {
+    text-decoration: underline;
+    outline: none;
+  }
+
+  main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 0 0 16px 16px;
+  }
+
+  #logo {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #027027;
+    font-family: 'Brush Script MT', cursive;
+    margin-bottom: 0.5rem;
+    user-select: none;
+    text-shadow: 1px 1px 4px #a8d5b9;
+  }
+  p.welcome-text {
+    margin: 0.5rem 0;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #244a32;
+  }
+
+  #buttons {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  button.main-btn {
+    flex-grow: 1;
+    padding: 0.75rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: #3d7a51;
+    box-shadow: 0 3px 10px rgba(35, 92, 54, 0.7);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  button.main-btn:hover, button.main-btn:focus {
+    background: #2c5739;
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  /* Responsive mobile optimizations */
+  @media (max-width: 400px) {
+    #app {
+      width: 90vw;
+      height: 90vh;
+      max-width: none;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+    main {
+      padding: 1rem 0.8rem;
+      border-radius: 0 0 12px 12px;
+    }
+    #buttons {
+      flex-direction: column;
+    }
+    button.main-btn {
+      padding: 1rem;
+      font-size: 1.4rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="app" role="main" aria-label="Laxmi Farmhouse Booking Home Page">
+
+    <header>
+      <h1>LAXMI Farmhouse</h1>
+      <p>Address: Badlapur, Mumbai, Maharashtra, India</p>
+      <p>Owner: Mahesh</p>
+      <p>Contact: <a href="tel:+919876543210" aria-label="Call Owner">+91 9876543210</a></p>
+    </header>
+
+    <main>
+      <div id="logo" aria-label="Laxmi Farmhouse Logo">🌿 LAXMI 🌿</div>
+      <p class="welcome-text">Welcome to the Laxmi Farmhouse! Book your stay or view beautiful images.</p>
+      <div id="buttons" role="group" aria-label="Main navigation buttons">
+        <button id="btn-images" class="main-btn" onclick="location.href='images.html'" aria-controls="images" aria-expanded="false" aria-label="View Images of Laxmi Farmhouse">Images</button>
+        <button id="btn-booking" class="main-btn" onclick="location.href='booking.html'" aria-controls="booking" aria-expanded="false" aria-label="Book a Stay at Laxmi Farmhouse">Booking</button>
+        <button id="btn-booking-slots" class="main-btn" onclick="location.href='booking-slots.html'" aria-controls="booking-slots" aria-expanded="false" aria-label="View Booking Slots at Laxmi Farmhouse">Reserved Date </button>
+      </div>
+    </main>
+
+  </div>
+</body>
+</html>
+</content>
+</create_file>
+
+
+

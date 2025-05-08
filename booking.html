@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Laxmi Farmhouse Booking - Booking</title>
+<style>
+  /* Reset & base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff; /* White background */
+    color: #244a32;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  #app {
+    width: 100%;
+    max-width: 400px;
+    height: 600px;
+    background: #edf3e0;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  header {
+    padding: 1rem;
+    user-select: none;
+    background: #36795d;
+    border-radius: 12px 12px 0 0;
+    color: #e6f2ef;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  main {
+    flex-grow: 1;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+  h2 {
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  label {
+    font-weight: 600;
+    color: #244a32;
+  }
+  input, select {
+    padding: 0.5rem 0.6rem;
+    border-radius: 6px;
+    border: 2px solid #366b4b;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #244a32;
+  }
+  input:focus, select:focus {
+    border-color: #2c5739;
+    box-shadow: 0 0 6px #4b9167cc;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  .btn-submit {
+    margin-top: 1rem;
+    padding: 0.9rem;
+    font-size: 1.15rem;
+    font-weight: 900;
+    border: none;
+    border-radius: 10px;
+    background: #3d7a51;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(35, 92, 54, 0.8);
+    transition: background-color 0.3s ease;
+  }
+  .btn-submit:hover, .btn-submit:focus {
+    background: #2c5739;
+    outline: none;
+  }
+
+  button.back-btn {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: #27472d;
+    box-shadow: 0 3px 10px rgba(39, 71, 45, 0.7);
+    transition: background-color 0.3s ease;
+  }
+  button.back-btn:hover, button.back-btn:focus {
+    background: #1f3f24;
+    outline: none;
+  }
+
+  #booked-list {
+    margin-top: 1rem;
+    background: #d3eccf;
+    border-radius: 10px;
+    padding: 0.8rem;
+    max-height: 140px;
+    overflow-y: auto;
+    box-shadow: inset 0 0 8px #a2cdb3;
+    color: #244a32;
+  }
+  #booked-list h3 {
+    margin-top: 0; 
+    font-weight: 700;
+    text-align: center;
+    color: #2c5739;
+  }
+  #booked-list ul {
+    list-style: none;
+    padding-left: 0.8rem;
+    margin: 0.4rem 0 0 0;
+    font-size: 0.9rem;
+  }
+  #booked-list ul li {
+    padding: 0.2rem 0;
+    border-bottom: 1px solid #a4c891;
+  }
+
+  /* Responsive mobile optimizations */
+  @media (max-width: 400px) {
+    #app {
+      width: 90vw;
+      height: 90vh;
+      max-width: none;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+    main {
+      padding: 1rem 0.8rem;
+    }
+    button.back-btn, .btn-submit {
+      font-size: 1.3rem;
+      padding: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="app" role="main" aria-label="Laxmi Farmhouse Booking Form">
+
+    <header>
+      Book Your Stay
+    </header>
+
+    <main>
+      <form id="booking-form" novalidate aria-describedby="booking-instructions">
+        <div id="booking-instructions" class="sr-only">Fill the form below to book the farmhouse. All fields are required.</div>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required placeholder="Your full name" autocomplete="name" />
+
+        <label for="phone">Phone Number (+91)</label>
+        <input type="tel" id="phone" name="phone" pattern="\\+91[6-9][0-9]{9}" placeholder="+919876543210" required autocomplete="tel" />
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="example@mail.com" autocomplete="email" />
+
+        <label for="checkin">Check-in Date</label>
+        <input type="date" id="checkin" name="checkin" required />
+
+        <label for="checkout">Check-out Date</label>
+        <input type="date" id="checkout" name="checkout" required />
+
+        <label for="members">Number of Members</label>
+        <input type="number" id="members" name="members" min="1" max="50" step="1" required placeholder="Number of people" />
+
+        <label for="time">Expected Arrival Time</label>
+        <input type="time" id="time" name="time" required />
+
+        <button type="submit" class="btn-submit" aria-label="Submit Booking Form">Confirm Booking</button>
+      </form>
+
+      <div id="booked-list" aria-live="polite" aria-atomic="true" tabindex="0" aria-label="Already booked dates list">
+        <h3>Already Booked Dates</h3>
+        <ul id="booked-dates-ul">
+          <!-- dynamically filled -->
+        </ul>
+      </div>
+
+      <button class="back-btn" onclick="location.href='index.html'" aria-label="Back to Home">Back</button>
+    </main>
+
+  </div>
+
+  <script>
+    (function(){
+      const bookingForm = document.getElementById('booking-form');
+      const bookedDatesUl = document.getElementById('booked-dates-ul');
+
+      function loadBookings() {
+        const data = localStorage.getItem('laxmiFarmhouseBookings');
+        return data ? JSON.parse(data) : [];
+      }
+
+      function saveBookings(bookings) {
+        localStorage.setItem('laxmiFarmhouseBookings', JSON.stringify(bookings));
+      }
+
+      function validPhone(phone) {
+        const normalized = phone.trim();
+        const regex = /^\+91[6-9][0-9]{9}$/;
+        return regex.test(normalized);
+      }
+
+      function isOverlap(newCheckIn, newCheckOut, bookings) {
+        for (const b of bookings) {
+          const ci = new Date(b.checkin);
+          const co = new Date(b.checkout);
+          if (newCheckIn <= co && newCheckOut >= ci) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      function displayBookedDates() {
+        const bookings = loadBookings();
+        if (bookings.length === 0) {
+          bookedDatesUl.innerHTML = '<li>No bookings yet.</li>';
+          return;
+        }
+        bookings.sort((a, b) => new Date(a.checkin) - new Date(b.checkin));
+        bookedDatesUl.innerHTML = '';
+        for (const b of bookings) {
+          const ci = new Date(b.checkin);
+          const co = new Date(b.checkout);
+          const options = { year: 'numeric', month: 'short', day: 'numeric' };
+          const ciStr = ci.toLocaleDateString('en-IN', options);
+          const coStr = co.toLocaleDateString('en-IN', options);
+          const li = document.createElement('li');
+          li.textContent = `${b.name} (${b.phone}): ${ciStr} to ${coStr}, ${b.members} member${b.members > 1 ? 's' : ''}, Arrival at ${b.time}`;
+          bookedDatesUl.appendChild(li);
+        }
+      }
+
+      bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = bookingForm.name.value.trim();
+        const phone = bookingForm.phone.value.trim();
+        const email = bookingForm.email.value.trim();
+        const checkinStr = bookingForm.checkin.value;
+        const checkoutStr = bookingForm.checkout.value;
+        const members = parseInt(bookingForm.members.value, 10);
+        const time = bookingForm.time.value;
+
+        if (name.length < 3) {
+          alert('Please enter a valid name with at least 3 characters.');
+          bookingForm.name.focus();
+          return;
+        }
+        if (!validPhone(phone)) {
+          alert('Please enter a valid Indian phone number starting with +91 followed by 10 digits, starting 6-9.');
+          bookingForm.phone.focus();
+          return;
+        }
+        if (!email.includes('@') || email.length < 5) {
+          alert('Please enter a valid email address.');
+          bookingForm.email.focus();
+          return;
+        }
+        if (!checkinStr || !checkoutStr) {
+          alert('Please select valid check-in and check-out dates.');
+          bookingForm.checkin.focus();
+          return;
+        }
+        const checkin = new Date(checkinStr);
+        const checkout = new Date(checkoutStr);
+
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        if (checkin < today) {
+          alert('Check-in date cannot be in the past.');
+          bookingForm.checkin.focus();
+          return;
+        }
+        if (checkout <= checkin) {
+          alert('Check-out date must be after check-in date.');
+          bookingForm.checkout.focus();
+          return;
+        }
+        if (!(members > 0 && members <= 50)) {
+          alert('Number of members must be between 1 and 50.');
+          bookingForm.members.focus();
+          return;
+        }
+        if (!time) {
+          alert('Please select your expected arrival time.');
+          bookingForm.time.focus();
+          return;
+        }
+
+        const bookings = loadBookings();
+        if (isOverlap(checkin, checkout, bookings)) {
+          alert('Sorry, the selected dates overlap with an existing booking. Please choose different dates.');
+          return;
+        }
+
+        bookings.push({name, phone, email, checkin: checkinStr, checkout: checkoutStr, members, time});
+        saveBookings(bookings);
+        alert('Thank you! Your booking is confirmed.');
+        bookingForm.reset();
+        displayBookedDates();
+      });
+
+      // Initialize booked dates display
+      displayBookedDates();
+    })();
+  </script>
+</body>
+</html>
